@@ -10,7 +10,7 @@ public class DataSource {
     private static DataSource instance;   // <-- Singleton
     private Connection connection;
 
-    static final String URL = "jdbc:mysql://localhost:3306/gestionderecrutement?useSSL=false&serverTimezone=UTC";
+    static final String URL = "jdbc:mysql://localhost:3306/gestionderecrutement";
     private static final String USER = "root";
     private static final String PASSWORD = "";
 

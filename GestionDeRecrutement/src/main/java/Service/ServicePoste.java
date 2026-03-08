@@ -98,4 +98,3 @@ public class ServicePoste  implements PosteRepository {
         }
     }
 
-}
