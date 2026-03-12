@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Controller.CompetencePosteController">
+
+    <top>
+        <HBox styleClass="toolbar" spacing="8" alignment="CENTER_LEFT">
+            <Label text="Compétences par Poste" styleClass="view-title"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button fx:id="btnAdd"     text="+ Associer"  onAction="#onAdd"     styleClass="btn-primary"/>
+            <Button fx:id="btnEdit"    text="Modifier"    onAction="#onEdit"    styleClass="btn-secondary"/>
+            <Button fx:id="btnDelete"  text="Supprimer"   onAction="#onDelete"  styleClass="btn-danger"/>
+            <Button fx:id="btnRefresh" text="Actualiser"  onAction="#onRefresh" styleClass="btn-secondary"/>
+        </HBox>
+    </top>
+
+    <center>
+        <TableView fx:id="table" BorderPane.alignment="CENTER">
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+            </columnResizePolicy>
+            <columns>
+                <TableColumn fx:id="colId"           text="ID"           prefWidth="70"/>
+                <TableColumn fx:id="colCompetenceId" text="Compétence ID" prefWidth="160"/>
+                <TableColumn fx:id="colPosteId"      text="Poste ID"     prefWidth="160"/>
+                <TableColumn fx:id="colNiveau"       text="Niveau requis" prefWidth="160"/>
+            </columns>
+        </TableView>
+    </center>
+
+</BorderPane>

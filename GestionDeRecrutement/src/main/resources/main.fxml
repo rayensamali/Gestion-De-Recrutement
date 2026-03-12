@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Controller.MainController"
+            stylesheets="@app.css"
+            prefWidth="1200" prefHeight="750">
+
+    <left>
+        <VBox styleClass="sidebar" spacing="2" prefWidth="210">
+            <padding><Insets top="0" right="0" bottom="20" left="0"/></padding>
+
+            <Label text="RH RECRUTEMENT" styleClass="app-title"/>
+
+            <Label text="RECRUTEMENT" styleClass="section-label"/>
+            <Button fx:id="btnCandidats"       text="Candidats"         styleClass="nav-btn" onAction="#showCandidats"       maxWidth="Infinity"/>
+            <Button fx:id="btnCandidatures"    text="Candidatures"      styleClass="nav-btn" onAction="#showCandidatures"    maxWidth="Infinity"/>
+            <Button fx:id="btnEntretiens"      text="Entretiens"        styleClass="nav-btn" onAction="#showEntretiens"      maxWidth="Infinity"/>
+
+            <Label text="PARAMÉTRAGE" styleClass="section-label"/>
+            <Button fx:id="btnCompetences"     text="Compétences"       styleClass="nav-btn" onAction="#showCompetences"     maxWidth="Infinity"/>
+            <Button fx:id="btnCompetencePoste" text="Compétence Poste"  styleClass="nav-btn" onAction="#showCompetencePoste" maxWidth="Infinity"/>
+            <Button fx:id="btnPostes"          text="Postes"            styleClass="nav-btn" onAction="#showPostes"          maxWidth="Infinity"/>
+            <Button fx:id="btnRecruteurs"      text="Recruteurs"        styleClass="nav-btn" onAction="#showRecruteurs"      maxWidth="Infinity"/>
+        </VBox>
+    </left>
+
+    <center>
+        <StackPane fx:id="contentPane" styleClass="content-area">
+            <Label text="Sélectionnez une section dans le menu de gauche."
+                   styleClass="placeholder-label"/>
+        </StackPane>
+    </center>
+
+</BorderPane>

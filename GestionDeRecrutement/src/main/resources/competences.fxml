@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Controller.CompetencesController">
+
+    <top>
+        <VBox>
+            <!-- Toolbar -->
+            <HBox styleClass="toolbar" spacing="8" alignment="CENTER_LEFT">
+                <Label text="Compétences" styleClass="view-title"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button fx:id="btnAdd"     text="+ Ajouter"  onAction="#onAdd"     styleClass="btn-primary"/>
+                <Button fx:id="btnEdit"    text="Modifier"   onAction="#onEdit"    styleClass="btn-secondary"/>
+                <Button fx:id="btnDelete"  text="Supprimer"  onAction="#onDelete"  styleClass="btn-danger"/>
+                <Button fx:id="btnRefresh" text="Actualiser" onAction="#onRefresh" styleClass="btn-secondary"/>
+            </HBox>
+            <!-- Search bar -->
+            <HBox styleClass="search-bar" spacing="8" alignment="CENTER_LEFT">
+                <Label text="Rechercher :"/>
+                <TextField fx:id="tfSearch" promptText="Nom de compétence..." styleClass="search-field"/>
+                <Label text="Catégorie :"/>
+                <ComboBox fx:id="cbFilterCategorie" promptText="Toutes" prefWidth="200"/>
+            </HBox>
+        </VBox>
+    </top>
+
+    <center>
+        <TableView fx:id="table" BorderPane.alignment="CENTER">
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+            </columnResizePolicy>
+            <columns>
+                <TableColumn fx:id="colId"        text="ID"         prefWidth="60"/>
+                <TableColumn fx:id="colNom"       text="Nom"        prefWidth="200"/>
+                <TableColumn fx:id="colCategorie" text="Catégorie"  prefWidth="200"/>
+                <TableColumn fx:id="colNiveau"    text="Niveau"     prefWidth="150"/>
+            </columns>
+        </TableView>
+    </center>
+
+</BorderPane>
