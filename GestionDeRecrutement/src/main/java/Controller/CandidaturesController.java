@@ -4,9 +4,12 @@ import Entity.*;
 import Service.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import Utils.QRCodeUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -22,7 +25,7 @@ public class CandidaturesController {
         @FXML private TableColumn<Candidature, String> colDecision;
         @FXML private TableColumn<Candidature, LocalDate> colDateCand;
         @FXML private TableColumn<Candidature, LocalDate> colDateDecision;
-        @FXML private Button btnAdd, btnEdit, btnDelete, btnRefresh;
+        @FXML private Button btnAdd, btnEdit, btnDelete, btnRefresh, btnQRCode;
 
         private final CandidatureRepository service = new ServiceCandidature();
         private final CandidatRepository candidatService = new ServiceCandidat();
@@ -61,7 +64,46 @@ public class CandidaturesController {
             posteNamesById = posteService.findAll().stream().collect(Collectors.toMap(Poste::getId, Poste::getIntitule));
             data.setAll(service.findAll());
         }
-        private void updateButtons(){ boolean sel = table.getSelectionModel().getSelectedItem()!=null; btnEdit.setDisable(!sel); btnDelete.setDisable(!sel); }
+        private void updateButtons(){
+            boolean sel = table.getSelectionModel().getSelectedItem() != null;
+            btnEdit.setDisable(!sel);
+            btnDelete.setDisable(!sel);
+            btnQRCode.setDisable(!sel);
+        }
+
+        @FXML public void onQRCode() {
+            Candidature c = table.getSelectionModel().getSelectedItem();
+            if (c == null) return;
+
+            // Build the text that will be encoded in the QR code
+            String content = "=== CANDIDATURE ===\n"
+                    + "Code       : " + Objects.toString(c.getCode(), "N/A") + "\n"
+                    + "Candidat   : " + nameForCandidat(c.getCandidatId()) + "\n"
+                    + "Poste      : " + nameForPoste(c.getPosteId()) + "\n"
+                    + "Date cand. : " + c.getDateCandidature() + "\n"
+                    + "Phase      : " + c.getPhase() + "\n"
+                    + "Screening  : " + (c.getResultatScreening() == null ? "N/A" : c.getResultatScreening()) + "\n"
+                    + "Décision   : " + (c.getDecisionFinale() == null ? "N/A" : c.getDecisionFinale()) + "\n"
+                    + "Date déc.  : " + (c.getDateDecision() == null ? "N/A" : c.getDateDecision());
+
+            ImageView imageView = new ImageView(QRCodeUtil.generate(content, 300));
+            imageView.setFitWidth(300);
+            imageView.setFitHeight(300);
+
+            Label infoLabel = new Label("Scannez ce QR code pour obtenir\nles coordonnées de la candidature.");
+            infoLabel.setStyle("-fx-font-size: 12px; -fx-text-alignment: center;");
+
+            VBox box = new VBox(10, imageView, infoLabel);
+            box.setStyle("-fx-alignment: center; -fx-padding: 15;");
+
+            Dialog<Void> dialog = new Dialog<>();
+            dialog.setTitle("QR Code — " + Objects.toString(c.getCode(), "Candidature #" + c.getId()));
+            dialog.setHeaderText("Candidat : " + nameForCandidat(c.getCandidatId())
+                    + "   |   Poste : " + nameForPoste(c.getPosteId()));
+            dialog.getDialogPane().setContent(box);
+            dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
+            dialog.showAndWait();
+        }
 
         @FXML public void onAdd(){
             openForm(null).ifPresent(c->{
